@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Market - Detalles de Pago</title>
+    <link rel="stylesheet" href="CSS/Pedido.css">
+    <script src="JS/Pedido.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Función para abrir Google Maps
+        function abrirGoogleMaps() {
+          // Abre Google Maps en una nueva ventana o pestaña
+          window.open('https://www.google.com/maps');
+        }
+      
+        // Obtener referencia al botón y al textarea
+        const botonUbicar = document.getElementById('ubicar');
+        const textareaDireccion = document.getElementById('direccion');
+      
+        // Escuchar el evento click en el botón
+        botonUbicar.addEventListener('click', function() {
+          // Abrir Google Maps cuando se hace clic en el botón
+          abrirGoogleMaps();
+        });
+      
+        // Función para manejar la ubicación seleccionada de Google Maps
+        function recibirUbicacion(ubicacion) {
+          // Colocar la ubicación seleccionada en el textarea
+          textareaDireccion.value = ubicacion;
+        }
+      </script>
+      
+</head>
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Estilos CSS para el mapa y controles -->
+<style>
+  #mapa {
+    height: 400px; /* Altura deseada para el mapa */
+  }
+
+  #direccion {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: vertical; /* Permite redimensionar verticalmente */
+  }
+</style>
+ <!-- Incluye Leaflet JavaScript -->
+ <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Coordenadas iniciales y nivel de zoom
+      var latitudInicial = 12.1292223;
+      var longitudInicial = -86.2517181;
+      var zoomInicial = 13;
+  
+      // Inicializar el mapa de Leaflet
+      var mapa = L.map('mapa').setView([latitudInicial, longitudInicial], zoomInicial);
+  
+      // Añadir capa de OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mapa);
+  
+      // Manejar el clic en el mapa para obtener las coordenadas
+      mapa.on('click', function(e) {
+        var latitud = e.latlng.lat.toFixed(6); // Redondear latitud a 6 decimales
+        var longitud = e.latlng.lng.toFixed(6); // Redondear longitud a 6 decimales
+        document.getElementById('address').value = latitud + ', ' + longitud;
+      });
+    });
+
+    
+        // Función para validar el número de tarjeta usando el algoritmo de Luhn
+        function validarTarjeta(numeroTarjeta) {
+            // Eliminar espacios en blanco del número de tarjeta
+            var tarjetaSinEspacios = numeroTarjeta.replace(/\s/g, '');
+            
+            // Revertir la cadena y convertirla en array
+            var numeros = tarjetaSinEspacios.split('').reverse();
+
+            // Sumar los dígitos y aplicar el algoritmo de Luhn
+            var suma = 0;
+            for (var i = 0; i < numeros.length; i++) {
+                var num = parseInt(numeros[i]);
+
+                if (i % 2 !== 0) {
+                    num *= 2;
+                    if (num > 9) {
+                        num -= 9;
+                    }
+                }
+
+                suma += num;
+            }
+
+            return suma % 10 === 0;
+        }
+
+        // Obtener referencias a los campos del formulario
+        var form = document.getElementById('payment-form');
+        var cardNumberInput = document.getElementById('card-number');
+        var expiryMonthSelect = document.getElementById('expiry-month');
+        var expiryYearSelect = document.getElementById('expiry-year');
+        var cvvInput = document.getElementById('cvv');
+
+        // Escuchar el evento submit del formulario
+        form.addEventListener('submit', function(event) {
+            // Validar el número de tarjeta antes de enviar el formulario
+            if (!validarTarjeta(cardNumberInput.value)) {
+                alert('El número de tarjeta ingresado es inválido.');
+                event.preventDefault(); // Evitar que el formulario se envíe
+            }
+        });
+
+        // Limpiar caracteres no numéricos del número de tarjeta mientras se escribe
+        cardNumberInput.addEventListener('input', function(event) {
+            this.value = this.value.replace(/\D/g, '');
+        });
+
+        // Limpiar caracteres no numéricos del CVV mientras se escribe
+        cvvInput.addEventListener('input', function(event) {
+            this.value = this.value.replace(/\D/g, '');
+        });
+  </script>
+  
+<body>
+    <header>
+        <img src="assets/image0.png" alt="Mini Market Logo">
+        <button class="arrowButton" onclick="window.history.back()">
+            <svg class="w-[50px] h-[50px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <span>Descripción del Pedido</span>
+        <nav>
+           
+            <span class="active">Información - - - 2. Detalles de pago - - - Completar Orden</span>
+        </nav>
+    </header>
+    <main>
+        <section class="billing-info">
+            <h2>Datos de facturación</h2>
+            <form>
+                <label for="email">Complete su artículo de compra proporcionando su orden de detalles de pago</label>
+                <input type="email" id="email" placeholder="Email">
+                
+                <label for="card-number">Número de tarjeta</label>
+                <input style = "width: 400px;"type="text" id="card-number"placeholder="•••• •••• •••• 9770" maxlength="19" autocomplete="off">
+                <div class="logo-marca" id="logo-marca" style="display: inline-block;vertical-align: middle; margin-left: 10px;">
+					<!-- <img src="img/logos/visa.png" alt=""> -->
+				</div>
+                <div class="card-details">
+                    <div>
+                        <label for="expiry-date">Fecha de expiración</label>
+                        <div class="expiry-date">
+                            <select id="expiry-day">
+                                  <option value="01">Enero</option>
+                                  <option value="02">Febrero</option>
+                                  <option value="03">Marzo</option>
+                                  <option value="04">Abril</option>
+                                  <option value="05">Mayo</option>
+                                  <option value="06">Junio</option>
+                                  <option value="07">Julio</option>
+                                  <option value="08">Agosto</option>
+                                  <option value="09">Septiembre</option>
+                                  <option value="10">Octubre</option>
+                                  <option value="11">Noviembre</option>
+                                  <option value="12">Diciembre</option>
+                            </select>
+                            <select id="expiry-year">
+                                <option value="01">2024</option>
+                                <option value="02">2025</option>
+                                <option value="03">2026</option>
+                                <option value="04">2027</option>
+                                <option value="05">2028</option>
+                                <option value="06">2029</option>
+                                <option value="07">2030</option>
+                                <option value="08">2031</option>
+                                <option value="09">2032</option>
+                                <option value="10">2033</option>
+                                <option value="11">2034</option>
+                                <option value="12">2035</option>
+                                <option value="13">2036</option>
+                                <option value="14">2037</option>
+                                <option value="15">2038</option>
+                                <option value="16">2039</option>
+                                <option value="17">2040</option>
+                                <option value="18">2041</option>
+                                <option value="19">2042</option>
+                                <option value="20">2043</option>
+                                <option value="21">2044</option>
+                                <option value="22">2045</option>
+                                <option value="23">2046</option>
+                                <option value="24">2047</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" maxlength="3" placeholder="732" pattern="[0-9]{3}" title="Ingrese un CVV válido de 3 dígitos">
+                    </div>
+                </div>
+
+                <label for="address">Dirección de Envío</label>
+                <textarea  class = "addressDir" id="address" name="direccion" rows="4" cols="50" placeholder="Escribe tu dirección aquí..."></textarea>
+                <button type="button" class="mostrarMap" id="mostrarMapa" >Mapa</button>
+                <div id="mapa" style="display: none;margin-top: 30px;"></div>
+            </form>
+        </section>
+        <section class="summary">
+            <h2>Resumen</h2>
+            <div class="summary-details">
+                <div>
+                    <span>Productos</span>
+                    <span id = 'ProductoPedido'>$???</span>
+                </div>
+                <div>
+                    <span>Envío</span>
+                    <span id = 'EnvioPedido'>$???</span>
+                </div>
+                <div>
+                    <span>IVA (15%)</span>
+                    <span id = 'IVAPedido'>$???</span>
+                </div>
+                <div>
+                    <span>Total</span>
+                    <span id = 'TotalPedido'>$???</span>
+                </div>
+            </div>
+            <button class = 'realizarPagoButton' id="realizar-pago">Realizar Pago</button>
+        </section>
+    </main>
+</body>
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      
+        
+    });
+
+    
+</script>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesta de Compra</title>
+    <link rel="stylesheet" href="CSS/CestaDeCompra.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="CSS/footer.css">
+    <script src="JS/Cesta.js"></script>
+</head>
+<body>
+    <header class="header-principal">
+        <div class="logo">
+            <img src="assets/image0.png" id = 'logo' alt="Mini-Markett Logo">
+            <h1>Mini-Markett</h1>
+
+    </header>
+    <div class="container">
+        <header>
+            <div class="absolute top-[140px] left-[80px]">
+                <button onclick="window.location.href='index.html'">
+                    <svg class="w-[35px] h-[35px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+            </div>
+            <h1 class="ml-[55px]">Cesta de Compra</h1>
+            <div class="search-bar">
+                <input type="text" id = "cestaSearchBar" placeholder="Buscar...">
+            </div>
+        </header>
+        <main>
+            <h2>Estas llevando:</h2>
+            <div class="header-row" style="height: 52px;">
+                <span style="margin-left: 120px;font-weight: bold;" id="productCount">Producto</span>
+                  <span style="margin-left: 300px;font-weight: bold;">Cantidad</span>
+                  <span style="margin-left: 205px;line-height: 1.2;font-weight: bold;" >Precio Unitario</span>
+                  <span style="margin-right: 0px;margin-left: 190px;font-weight: bold;">Precio Total</span>
+                
+                </div>
+            <div id="cart-items-container">
+                <!-- Los elementos del carrito se añadirán aquí dinámicamente -->
+            </div>
+        </main>
+        <div class="subtotal-container">
+            <div class="subtotal">
+                <span>Subtotal:</span>
+                <span id="subtotal-amount">$0</span>
+            </div>
+            <button class="continue-btn" id = "ContinueCesta" >
+                Continuar
+                
+            </button>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <p style="font-size: 37px;"><strong>Mini-Markett</strong></p>
+                <p>Tú conveniencia ¡nuestra prioridad!</p>
+            </div>
+            <div class="footer-section">
+                <p><a href="quienes somos.html">¿Quiénes somos?</a></p>
+                <p><a href="AboutUs.html">Misión y visión</a></p>
+            </div>
+            <div class="footer-section">
+                <p><strong>Contacto</strong></p>
+                <p>(+505) 5816 0546</p>
+                <p>minimarkett@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Mini-Markett. Todos los derechos reservados.</p>
+            <p><a href="PoliticasPrivacidad.html">Políticas de privacidad</a> | <a href="PoliticasSeguridad.html">Políticas de seguridad</a></p>
+        </div>
+    </footer>
+</body>
+</html>
