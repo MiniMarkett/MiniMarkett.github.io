@@ -452,7 +452,10 @@ else
             // Suponiendo que "container" es el elemento donde quieres añadir el párrafo:
             // container.appendChild(oldPriceElement);
         }
-        
+        else
+        {
+            price.style.marginLeft = "60px";
+        }
         const button = document.createElement("button");
         button.textContent = carritoIds.includes(item.id) ? "Agregado" : "Añadir al carrito";
         button.style.backgroundColor = carritoIds.includes(item.id) ? "#000" : "#f0b429";
